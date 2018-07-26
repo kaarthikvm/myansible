@@ -1,0 +1,46 @@
+---
+# tasks file for myapache
+#     - name: remove apache
+#       apt:
+#          name: apache2
+#          state: absent
+#     - name: install apache
+#       apt:
+#          name: apache2
+#          state: present
+#     - name: stop apache service
+#       service:
+#          name: apache2
+#          state: stopped
+#     - name: start apache service
+#       service:
+#          name: apache2
+#          state: started
+     - name: debuggig message
+       debug: # Module name
+          msg: "DEBUGGING WORKS"
+
+     - name: template understanding
+       template: # module name
+          src: temp.j2 # file present in roles/template, also uses the information from vars & default
+                       # vars has high priority and then it looks for default folder
+          dest: /tmp/temp.conf  # create a file and COPY to remote server
+      # {} in template denotes print statement..entire template takes JSON as input... (YAML to JSON)
+    
+     - name: copy module # copy static file from files folder to remote machine
+       copy:
+         src: hello.html
+         dest: /var/www/html/myhello.html
+    
+     - name: shell command  # better info in http://docs.ansible.com/ansible/latest/modules/shell_module.html?highlight=shell
+       shell: ls -lrth /tmp  >> remotelog.txt
+       
+     - name: COMMAND modules # BEST practise is to use COMMAND module than SHELL 
+       command: /bin/bash script.sh # >> myscriptlog.txt this does not to be used...rather register command is to be used
+       register: myshelloutput # there is a diff between /bin/sh and /bin/bash
+       args:
+            chdir: /home/vmk/myansible/remote_mch_simulator/
+
+     - name: My shell output printing
+       debug:
+         msg: "{{ myshelloutput }} $$$$$$  {{ myshelloutput.stdout }}"
