@@ -1,0 +1,10 @@
+---
+# tasks file for vlc
+     - name: remove vlc
+       apt:
+          name: vlc
+          state: absent
+     - name: install vlc
+       apt:
+          name: vlc
+          state: present
