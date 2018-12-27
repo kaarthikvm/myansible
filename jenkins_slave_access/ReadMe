@@ -1,0 +1,5 @@
+This demo does not use jenkins slave method. Folder name is misleading
+
+
+Bug 1: 
+host_key_checking = False hasto enabled in ansible.cfg to avoid ssh host key checking
